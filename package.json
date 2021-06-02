@@ -10,7 +10,8 @@
     "path-browserify": "^1.0.1",
     "vue": "^3.0.5",
     "vue-router": "^4.0.8",
-    "vuex": "^4.0.1"
+    "vuex": "^4.0.1",
+    "vuex-persistedstate": "^4.0.0-beta.3"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.2.3",
