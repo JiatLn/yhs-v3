@@ -16,6 +16,32 @@ export const routes = [
       },
     ],
   },
+  {
+    path: '/upload',
+    component: Layout,
+    alwaysShow: true,
+    meta: { title: '上传文件', icon: 'el-icon-upload' },
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/upload.vue'),
+        name: 'upload',
+      },
+    ],
+  },
+  {
+    path: '/yuhun',
+    component: Layout,
+    alwaysShow: true,
+    meta: { title: '御魂信息', icon: 'el-icon-upload' },
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/yuhun/summary.vue'),
+        name: 'summary',
+      },
+    ],
+  },
 ];
 
 // 用工厂函数创建router实例
