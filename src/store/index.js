@@ -13,7 +13,14 @@ const useStore = defineStore({
       this.yyx = data;
     },
   },
-  getters: {},
+  getters: {
+    userInfo() {
+      return this.yyx.user_info;
+    },
+    eqData() {
+      return this.yyx.eqData;
+    },
+  },
 });
 
 export default useStore;
