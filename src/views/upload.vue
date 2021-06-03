@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import { useStore } from 'vuex';
+import useStore from '@/store/index.js';
 
 import { parseYhJson } from '@/utils/parseJson.js';
 
@@ -32,7 +32,8 @@ const handleChangeFile = (file) => {
   reader.onload = () => {
     const yyxJson = JSON.parse(reader.result);
     let data = parseYhJson(yyxJson);
-    store.commit('setYYX', data);
+    localStorage.setItem('yyx', JSON.stringify(data));
+    store.setYYX(data);
   };
 };
 </script>

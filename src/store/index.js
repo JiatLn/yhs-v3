@@ -1,30 +1,19 @@
-import { createStore } from 'vuex';
-import createPersistedState from 'vuex-persistedstate';
+import { defineStore } from 'pinia';
 
-const store = createStore({
-  state: {
-    counter: 0,
-    yyx: {},
-  },
-  mutations: {
-    UPDATE_COUNTER(state, payload) {
-      state.counter = payload;
-    },
-    setYYX(state, data) {
-      state.yyx = data;
-    },
+const useStore = defineStore({
+  id: 'yyx',
+  state() {
+    return {
+      counter: 0,
+      yyx: {},
+    };
   },
   actions: {
-    updateYYX(context, data) {
-      context.commit('setYYX', data);
+    setYYX(data) {
+      this.yyx = data;
     },
   },
-  getters: {
-    yyx(state) {
-      return state.yyx;
-    },
-  },
-  plugins: [createPersistedState({})],
+  getters: {},
 });
 
-export default store;
+export default useStore;
