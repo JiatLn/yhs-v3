@@ -39,6 +39,13 @@ export const routes = [
         path: '',
         component: () => import('@/views/yuhun/summary.vue'),
         name: 'summary',
+        meta: { title: '账号信息', icon: 'el-icon-watermelon' },
+      },
+      {
+        path: 'list',
+        component: () => import('@/views/yuhun/yuhunList.vue'),
+        name: 'list',
+        meta: { title: '御魂列表', icon: 'el-icon-grape' },
       },
     ],
   },
