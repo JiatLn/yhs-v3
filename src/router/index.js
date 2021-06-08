@@ -33,7 +33,7 @@ export const routes = [
     path: '/yuhun',
     component: Layout,
     alwaysShow: true,
-    meta: { title: '御魂信息', icon: 'el-icon-upload' },
+    meta: { title: '御魂信息', icon: 'el-icon-coffee-cup' },
     children: [
       {
         path: '',
@@ -46,6 +46,12 @@ export const routes = [
         component: () => import('@/views/yuhun/yuhunList.vue'),
         name: 'list',
         meta: { title: '御魂列表', icon: 'el-icon-grape' },
+      },
+      {
+        path: 'speed',
+        component: () => import('@/views/yuhun/speed.vue'),
+        name: 'speed',
+        meta: { title: '速度', icon: 'el-icon-trophy-1' },
       },
     ],
   },
