@@ -1,0 +1,92 @@
+<template>
+  <div ref="chartEl" class="chart"></div>
+</template>
+
+<script setup>
+import { defineProps, onMounted, ref, onBeforeUnmount, watchEffect, watch } from 'vue';
+import * as echarts from 'echarts';
+import _ from 'lodash';
+
+const props = defineProps({
+  option: {
+    type: Object,
+    required: true,
+  },
+});
+
+const chart = ref(null);
+const chartEl = ref(null);
+
+const setOption = (option) => {
+  const baseOption = {
+    title: {
+      top: '4%',
+      left: '2%',
+      show: false,
+    },
+    grid: {
+      top: '20%',
+      left: '10%',
+      bottom: '10%',
+      containLabel: true,
+    },
+  };
+  // 合并配置
+  option = _.merge(baseOption, option);
+
+  chart.value && chart.value.setOption(option);
+};
+
+const resizeChart = _.throttle(
+  function () {
+    chart.value.resize();
+  },
+  500,
+  {
+    leading: true,
+    trailing: true,
+  },
+);
+
+// watchEffect(() => {
+//   console.log('onWatchEffect');
+//   setOption(props.option);
+// });
+
+watch(
+  () => props.option,
+  (newValue, oldValue) => {
+    setOption(newValue);
+  },
+);
+
+const resizeObserver = new ResizeObserver(() => {
+  resizeChart();
+});
+
+onMounted(() => {
+  console.log('onMounted');
+  setTimeout(() => {
+    chart.value = echarts.init(chartEl.value);
+    setOption(props.option);
+    window.addEventListener('resize', chart.value.resize);
+    resizeObserver.observe(chartEl.value);
+    // this.$once('hook:beforeDestroy', () => {
+    //   resizeObserver.disconnect();
+    //   window.removeEventListener('resize', chart.value.resize);
+    // });
+  }, 100);
+});
+
+onBeforeUnmount(() => {
+  resizeObserver.disconnect();
+  window.removeEventListener('resize', chart.value.resize);
+});
+</script>
+
+<style lang="scss" scoped>
+.chart {
+  height: 100%;
+  width: 100%;
+}
+</style>

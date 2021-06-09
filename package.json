@@ -6,6 +6,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "echarts": "^5.1.2",
     "element-plus": "^1.0.2-beta.45",
     "lodash": "^4.17.21",
     "path-browserify": "^1.0.1",
