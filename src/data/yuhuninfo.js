@@ -260,13 +260,13 @@ const info = [
 ];
 
 const nameDict = {
-  CritPower: '暴击',
+  CritPower: '暴击伤害',
   Attack: '攻击',
   Speed: '速度',
   Hp: '生命',
   Defense: '防御',
   AttackRate: '攻击加成',
-  CritRate: '暴击伤害',
+  CritRate: '暴击',
   HpRate: '生命加成',
   DefenseRate: '防御加成',
   EffectResistRate: '效果抵抗',
