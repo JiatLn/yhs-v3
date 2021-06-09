@@ -53,6 +53,12 @@ export const routes = [
         name: 'speed',
         meta: { title: '速度', icon: 'el-icon-trophy-1' },
       },
+      {
+        path: 'rank',
+        component: () => import('@/views/yuhun/rank.vue'),
+        name: 'rank',
+        meta: { title: '跑分', icon: 'el-icon-data-line' },
+      },
     ],
   },
 ];

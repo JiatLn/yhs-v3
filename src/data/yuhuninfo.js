@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 const info = [
   {
     name: '招财猫',
@@ -259,6 +261,8 @@ const info = [
   },
 ];
 
+const yuhunDict = _.groupBy(info, (item) => item.type);
+
 const nameDict = {
   CritPower: '暴击伤害',
   Attack: '攻击',
@@ -273,4 +277,4 @@ const nameDict = {
   EffectHitRate: '效果命中',
 };
 
-export { info, nameDict };
+export { info, nameDict, yuhunDict };

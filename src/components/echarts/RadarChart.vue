@@ -35,12 +35,12 @@ const option = computed(() => ({
     center: ['50%', '55%'],
     startAngle: 120,
     indicator: [
-      { name: '1号位', max: props.max },
-      { name: '2号位', max: props.max },
-      { name: '3号位', max: props.max },
-      { name: '4号位', max: props.max },
-      { name: '5号位', max: props.max },
-      { name: '6号位', max: props.max },
+      { name: '1号位', max: Math.max(...props.data) },
+      { name: '2号位', max: Math.max(...props.data) },
+      { name: '3号位', max: Math.max(...props.data) },
+      { name: '4号位', max: Math.max(...props.data) },
+      { name: '5号位', max: Math.max(...props.data) },
+      { name: '6号位', max: Math.max(...props.data) },
     ],
   },
   series: [
