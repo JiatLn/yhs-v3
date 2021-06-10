@@ -1,15 +1,15 @@
 <template>
   <div class="warpper">
-    <template v-if="eqData">
+    <template v-if="getEqData">
       <el-descriptions title="账号信息" size="medium" class="desc">
-        <el-descriptions-item label="用户名">{{ userInfo.user_name }}</el-descriptions-item>
-        <el-descriptions-item label="服务器">{{ userInfo.server_name }}</el-descriptions-item>
+        <el-descriptions-item label="用户名">{{ getUserInfo.user_name }}</el-descriptions-item>
+        <el-descriptions-item label="服务器">{{ getUserInfo.server_name }}</el-descriptions-item>
         <el-descriptions-item label="userId">
-          <el-tag size="small">{{ userInfo.user_id }}</el-tag>
+          <el-tag size="small">{{ getUserInfo.user_id }}</el-tag>
         </el-descriptions-item>
-        <el-descriptions-item label="日期">{{ userInfo.time_stamp }}</el-descriptions-item>
+        <el-descriptions-item label="日期">{{ getUserInfo.time_stamp }}</el-descriptions-item>
         <el-descriptions-item label="御魂数量">
-          {{ eqData.length }}
+          {{ getEqData.length }}
         </el-descriptions-item>
       </el-descriptions>
     </template>
@@ -18,14 +18,9 @@
 </template>
 
 <script setup>
-import _ from 'lodash';
+import { useYuhunStore } from '@/hooks/store/useYuhunStore.js';
 
-import useStore from '@/store/index.js';
-
-const store = useStore();
-
-const eqData = store.eqData;
-const userInfo = store.userInfo;
+const { getEqData, getUserInfo } = useYuhunStore();
 </script>
 
 <style lang="scss" scoped>

@@ -8,7 +8,7 @@
       :limit="1"
       accept=".json"
       :auto-upload="false"
-      :on-change="handleChangeFile"
+      :on-change="fileChangeHandle"
     >
       <i class="el-icon-upload"></i>
       <div class="el-upload__text">将json文件拖到此处，或<em>点击上传</em></div>
@@ -20,20 +20,19 @@
 </template>
 
 <script setup>
-import useStore from '@/store/index.js';
-
+import { useYuhunStore } from '@/hooks/store/useYuhunStore.js';
 import { parseYhJson } from '@/utils/parseJson.js';
 
-const store = useStore();
+const { setYuhunStore } = useYuhunStore();
 
-const handleChangeFile = (file) => {
+const fileChangeHandle = (file) => {
   const reader = new FileReader();
   reader.readAsText(file.raw);
   reader.onload = () => {
     const yyxJson = JSON.parse(reader.result);
     let data = parseYhJson(yyxJson);
     localStorage.setItem('yyx', JSON.stringify(data));
-    store.setYYX(data);
+    setYuhunStore(data);
   };
 };
 </script>

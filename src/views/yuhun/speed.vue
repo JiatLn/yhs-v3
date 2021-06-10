@@ -38,24 +38,15 @@
 <script setup>
 import _ from 'lodash';
 
-import useStore from '@/store/index.js';
+import { useYuhunStore } from '@/hooks/store/useYuhunStore.js';
 import { nameDict } from '@/data/yuhuninfo.js';
+import { format45 } from '@/utils/format.js';
 
-const store = useStore();
-
-const eqData = store.eqData;
-
-function format45(val, v2) {
-  if (isNaN(val) || val == undefined || val == null) {
-    return null;
-  }
-  v2 = Math.pow(10, v2);
-  return Math.round(val * v2) / v2;
-}
+const { getEqData } = useYuhunStore();
 
 const fullSpeed = _.groupBy(
   _.sortBy(
-    eqData.filter((item) => {
+    getEqData.value.filter((item) => {
       if (item.pos === 2) {
         // 二号位显示脖子
         return item.rand_attr.Speed >= 12 && item.base_attr.Speed === 57;

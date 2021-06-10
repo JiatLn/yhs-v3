@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { ElMessage, ElMessageBox } from 'element-plus';
-import store from '@/store';
+import { ElMessage } from 'element-plus';
 
 // 创建axios实例
 const service = axios.create({

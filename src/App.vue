@@ -5,20 +5,20 @@
 <script setup>
 import { onMounted } from 'vue';
 
-import useStore from '@/store/index.js';
+import { useYuhunStore } from '@/hooks/store/useYuhunStore.js';
+
+const { setYuhunStore, hasYYXState } = useYuhunStore();
 
 const loadYYXData = () => {
-  const store = useStore();
-  if (!Object.keys(store.yyx).length) {
+  if (!hasYYXState.value) {
     let yyx = localStorage.getItem('yyx');
-    yyx && store.setYYX(JSON.parse(yyx));
+    yyx && setYuhunStore(JSON.parse(yyx));
   }
 };
 
 onMounted(() => {
-  console.log('onMounted!!');
   loadYYXData();
 });
 </script>
 
-<style></style>
+<style lang="scss" scoped></style>

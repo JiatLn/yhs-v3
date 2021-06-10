@@ -31,16 +31,14 @@
 
 <script setup>
 import _ from 'lodash';
-
-import useStore from '@/store/index.js';
-import { calcPoint } from '@/utils/parseJson.js';
-import RadarChart from '@/components/echarts/RadarChart.vue';
 import { ref, computed } from 'vue';
 
+import { useYuhunStore } from '@/hooks/store/useYuhunStore.js';
+import { calcPoint } from '@/utils/parseJson.js';
+import RadarChart from '@/components/echarts/RadarChart.vue';
 import { yuhunDict } from '@/data/yuhuninfo.js';
 
-const store = useStore();
-const eqData = store.eqData;
+const { getEqData } = useYuhunStore();
 
 const suitName = ref('破势');
 const calcType = ref(['A', 'S']);
@@ -53,7 +51,7 @@ const yuhunOptions = Object.entries(yuhunDict).map(([key, value]) => ({
 
 let goodEq = computed(() => {
   let res = _.countBy(
-    eqData
+    getEqData.value
       .filter((eq) => eq.suitInfo.name === suitName.value)
       .map((item) => ({ ...item, point: calcPoint(item, calcType.value) }))
       .filter((eq) => eq.point >= rankNum.value),

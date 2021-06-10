@@ -1,26 +1,28 @@
 import { defineStore } from 'pinia';
 
-const useStore = defineStore({
+const useAppStore = defineStore({
   id: 'yyx',
   state() {
     return {
-      counter: 0,
       yyx: {},
     };
   },
   actions: {
-    setYYX(data) {
+    setYuhunStore(data) {
       this.yyx = data;
     },
   },
   getters: {
-    userInfo() {
+    hasYYXState() {
+      return !!Object.keys(this.yyx).length;
+    },
+    getUserInfo() {
       return this.yyx.user_info;
     },
-    eqData() {
+    getEqData() {
       return this.yyx.eqData;
     },
   },
 });
 
-export default useStore;
+export default useAppStore;
