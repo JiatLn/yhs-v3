@@ -5,7 +5,7 @@
 <script setup>
 import { defineProps, onMounted, ref, onBeforeUnmount, watchEffect, watch } from 'vue';
 import * as echarts from 'echarts';
-import _ from 'lodash';
+import { merge, throttle } from 'lodash';
 
 const props = defineProps({
   option: {
@@ -32,12 +32,12 @@ const setOption = (option) => {
     },
   };
   // 合并配置
-  option = _.merge(baseOption, option);
+  option = merge(baseOption, option);
 
   chart.value && chart.value.setOption(option);
 };
 
-const resizeChart = _.throttle(
+const resizeChart = throttle(
   function () {
     chart.value.resize();
   },

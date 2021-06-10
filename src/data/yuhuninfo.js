@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { groupBy } from 'lodash';
 
 const info = [
   {
@@ -261,7 +261,7 @@ const info = [
   },
 ];
 
-const yuhunDict = _.groupBy(info, (item) => item.type);
+const yuhunDict = groupBy(info, (item) => item.type);
 
 const nameDict = {
   CritPower: '暴击伤害',

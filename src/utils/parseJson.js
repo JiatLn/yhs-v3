@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { flatten } from 'lodash';
 
 // 解析御魂json
 import { info } from '@/data/yuhuninfo.js';
@@ -40,7 +40,7 @@ const calcAttr = (attrName, attrVal) => {
 const calcPoint = (eqData, type = ['A', 'S']) => {
   let point = 0;
   // 有效属性列表
-  const goodAttr = [...new Set(_.flatten(type.map((item) => attrsDict[item])))];
+  const goodAttr = [...new Set(flatten(type.map((item) => attrsDict[item])))];
   const randAttr = Object.entries(eqData.rand_attr);
   randAttr.forEach(([name, value]) => {
     if (goodAttr.includes(name)) {

@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import _ from 'lodash';
+import { countBy, merge } from 'lodash';
 import { ref, computed } from 'vue';
 
 import { useYuhunStore } from '@/hooks/store/useYuhunStore.js';
@@ -50,14 +50,14 @@ const yuhunOptions = Object.entries(yuhunDict).map(([key, value]) => ({
 }));
 
 let goodEq = computed(() => {
-  let res = _.countBy(
+  let res = countBy(
     getEqData.value
       .filter((eq) => eq.suitInfo.name === suitName.value)
       .map((item) => ({ ...item, point: calcPoint(item, calcType.value) }))
       .filter((eq) => eq.point >= rankNum.value),
     (item) => item.pos,
   );
-  res = _.merge({ 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }, res);
+  res = merge({ 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }, res);
   return Object.values(res);
 });
 </script>

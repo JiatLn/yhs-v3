@@ -2,7 +2,7 @@
   <div class="warpper">
     <div class="warpper-content">
       <el-descriptions class="desc" size="medium" direction="vertical" border>
-        <el-descriptions-item label="散件一速">{{ 57 + _.sum(maxSpeed) }}</el-descriptions-item>
+        <el-descriptions-item label="散件一速">{{ 57 + sum(maxSpeed) }}</el-descriptions-item>
         <el-descriptions-item label="各位置最高速">{{ maxSpeed.join(' | ') }}</el-descriptions-item>
       </el-descriptions>
       <el-tabs type="border-card" class="card">
@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-import _ from 'lodash';
+import { groupBy, sortBy, sum } from 'lodash';
 
 import { useYuhunStore } from '@/hooks/store/useYuhunStore.js';
 import { nameDict } from '@/data/yuhuninfo.js';
@@ -44,8 +44,8 @@ import { format45 } from '@/utils/format.js';
 
 const { getEqData } = useYuhunStore();
 
-const fullSpeed = _.groupBy(
-  _.sortBy(
+const fullSpeed = groupBy(
+  sortBy(
     getEqData.value.filter((item) => {
       if (item.pos === 2) {
         // 二号位显示脖子
