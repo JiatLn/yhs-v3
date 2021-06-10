@@ -65,7 +65,6 @@ const resizeObserver = new ResizeObserver(() => {
 });
 
 onMounted(() => {
-  console.log('onMounted');
   setTimeout(() => {
     chart.value = echarts.init(chartEl.value);
     setOption(props.option);

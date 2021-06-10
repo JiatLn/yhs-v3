@@ -23,43 +23,25 @@
         <el-checkbox label="M">命中</el-checkbox>
       </el-checkbox-group>
       <div class="graph">
-        <radar-chart :data="goodEq" :legend="suitName"></radar-chart>
+        <radar-chart :data="score" :legend="suitName"></radar-chart>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { countBy, merge } from 'lodash';
-import { ref, computed } from 'vue';
+import { ref, computed, toRaw } from 'vue';
 
-import { useYuhunStore } from '@/hooks/store/useYuhunStore.js';
-import { calcPoint } from '@/utils/parseJson.js';
 import RadarChart from '@/components/echarts/RadarChart.vue';
-import { yuhunDict } from '@/data/yuhuninfo.js';
+import { useYuhunStore } from '@/hooks/store/useYuhunStore.js';
+import { getSuitPosCountByScore } from '@/utils/analysis.js';
+import { yuhunOptions } from '@/data/yuhuninfo.js';
 
 const { getEqData } = useYuhunStore();
-
 const suitName = ref('破势');
 const calcType = ref(['A', 'S']);
 const rankNum = ref(6);
-const yuhunOptions = Object.entries(yuhunDict).map(([key, value]) => ({
-  label: key,
-  children: value.map((item) => ({ label: item.name, value: item.name })),
-  value: key,
-}));
-
-let goodEq = computed(() => {
-  let res = countBy(
-    getEqData.value
-      .filter((eq) => eq.suitInfo.name === suitName.value)
-      .map((item) => ({ ...item, point: calcPoint(item, calcType.value) }))
-      .filter((eq) => eq.point >= rankNum.value),
-    (item) => item.pos,
-  );
-  res = merge({ 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }, res);
-  return Object.values(res);
-});
+const score = computed(() => getSuitPosCountByScore(suitName.value, calcType.value, rankNum.value));
 </script>
 
 <style lang="scss" scoped>

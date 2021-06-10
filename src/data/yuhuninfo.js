@@ -277,4 +277,10 @@ const nameDict = {
   EffectHitRate: '效果命中',
 };
 
-export { info, nameDict, yuhunDict };
+const yuhunOptions = Object.entries(yuhunDict).map(([key, value]) => ({
+  label: key,
+  children: value.map((item) => ({ label: item.name, value: item.name })),
+  value: key,
+}));
+
+export { info, nameDict, yuhunDict, yuhunOptions };
