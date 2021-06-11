@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import { defineProps, onMounted, ref, onBeforeUnmount, watchEffect, watch } from 'vue';
+import { defineProps, onMounted, ref, onBeforeUnmount, shallowRef, watch } from 'vue';
 import * as echarts from 'echarts';
 import { merge, throttle } from 'lodash';
 
@@ -14,7 +14,7 @@ const props = defineProps({
   },
 });
 
-const chart = ref(null);
+const chart = shallowRef(null);
 const chartEl = ref(null);
 
 const setOption = (option) => {

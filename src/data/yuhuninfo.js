@@ -1,6 +1,6 @@
 import { groupBy } from 'lodash';
 
-const info = [
+const yuhunInfo = [
   {
     name: '招财猫',
     id: 300010,
@@ -261,7 +261,7 @@ const info = [
   },
 ];
 
-const yuhunDict = groupBy(info, (item) => item.type);
+const yuhunDict = groupBy(yuhunInfo, (item) => item.type);
 
 const nameDict = {
   CritPower: '暴击伤害',
@@ -283,4 +283,4 @@ const yuhunOptions = Object.entries(yuhunDict).map(([key, value]) => ({
   value: key,
 }));
 
-export { info, nameDict, yuhunDict, yuhunOptions };
+export { yuhunInfo, nameDict, yuhunDict, yuhunOptions };

@@ -1,13 +1,13 @@
 import { flatten } from 'lodash';
 
 // 解析御魂json
-import { info } from '@/data/yuhuninfo.js';
+import { yuhunInfo } from '@/data/yuhuninfo.js';
 
 const parseYhJson = (json) => {
   const eqData = json.equip_data;
   let eqDataByPos = [[], [], [], [], [], []];
   eqData.forEach((eq, index) => {
-    eq.suitInfo = info.filter((item) => item.id === eq.suit_id)[0];
+    eq.suitInfo = yuhunInfo.filter((item) => item.id === eq.suit_id)[0];
     eqDataByPos[eq.pos - 1].push(eq);
   });
   delete json.equip_data;
@@ -37,8 +37,14 @@ const calcAttr = (attrName, attrVal) => {
 };
 
 // 收益次数计算
-const calcPoint = (eqData, type = ['A', 'S']) => {
+const calcPoint = (eqData, type = ['A', 'S'], onlySpeed = false) => {
   let point = 0;
+
+  // 如果只考虑速度做为评分标准 则二号位主属性非速度的都视为0分（如防御17速）
+  if (onlySpeed && eqData.pos === 2 && eqData.base_attr !== 'Speed') {
+    return 0;
+  }
+
   // 有效属性列表
   const goodAttr = [...new Set(flatten(type.map((item) => attrsDict[item])))];
   const randAttr = Object.entries(eqData.rand_attr);
