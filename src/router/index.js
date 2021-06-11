@@ -32,7 +32,7 @@ export const routes = [
   {
     path: '/yuhun',
     component: Layout,
-    alwaysShow: true,
+    alwaysShow: false,
     meta: { title: '御魂信息', icon: 'el-icon-coffee-cup' },
     children: [
       {
@@ -59,7 +59,19 @@ export const routes = [
         name: 'rank',
         meta: { title: '跑分', icon: 'el-icon-data-line' },
       },
+      {
+        path: 'analysis',
+        component: () => import('@/views/yuhun/maxSpeedCount.vue'),
+        name: 'analysis',
+        meta: { title: '满速分布', icon: 'el-icon-s-data' },
+      },
     ],
+  },
+  {
+    path: '/:catchAll(.*)',
+    name: '404',
+    redirect: '/',
+    hidden: true,
   },
 ];
 

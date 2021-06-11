@@ -10,7 +10,7 @@
       router
     >
       <sidebar-item
-        v-for="route in routes"
+        v-for="route in routes.filter((item) => (hasYYXState || item.alwaysShow) && !item.hidden)"
         :key="route.path"
         :item="route"
         :basePath="route.path"
@@ -26,6 +26,9 @@ import { useRoute } from 'vue-router';
 import { routes } from '@/router';
 import { computed } from 'vue';
 import variables from '@/styles/variables.module.scss';
+import { useYuhunStore } from '@/hooks/store/useYuhunStore.js';
+
+const { hasYYXState } = useYuhunStore();
 
 const route = useRoute();
 
