@@ -3,7 +3,7 @@
     <div class="box-top">
       <div class="box-top__left">
         <div class="icon">
-          <img :src="yuhun.suitInfo.icon" alt="御魂图标" />
+          <img :src="`/src/assets/img/yuhun/${yuhun.suitInfo.id}.png`" alt="御魂图标" />
         </div>
         <div class="desc">
           <span>{{ yuhun.suitInfo.name }} +{{ yuhun.level }}</span>

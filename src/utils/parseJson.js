@@ -11,6 +11,9 @@ const parseYhJson = (json) => {
     eqDataByPos[eq.pos - 1].push(eq);
   });
   delete json.equip_data;
+  eqData.forEach((item) => {
+    delete item.suit_id;
+  });
   return { ...json, eqData, eqDataByPos };
 };
 
