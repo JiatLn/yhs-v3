@@ -61,17 +61,13 @@ export function calcYuhunScore(eqData) {
 export function evaluationByScore(score) {
   const s = Math.max(...score);
   if (s >= 100) {
-    return 'SSS';
-  } else if (s >= 90) {
-    return 'SS';
-  } else if (s >= 80) {
-    return 'S';
+    return 'SP';
   } else if (s >= 70) {
-    return 'A';
+    return 'SSR';
   } else if (s >= 60) {
-    return 'B';
-  } else if (s >= 50) {
-    return 'C';
+    return 'SR';
+  } else if (s >= 30) {
+    return 'R';
   } else {
     return 'N';
   }

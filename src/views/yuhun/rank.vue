@@ -10,7 +10,6 @@
         <el-divider></el-divider>
         <el-table
           :data="eqDatas"
-          style="width: 100%"
           height="600"
           border
           highlight-current-row
@@ -69,7 +68,14 @@
               <span :style="`color: ${valToColor(row.score[5])}`">{{ row.score[5] }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="rank" label="参考评级" :sortable="true" width="100" align="center">
+          <el-table-column
+            prop="rank"
+            label="参考评级"
+            :sortable="true"
+            :sort-method="sortByRank"
+            width="100"
+            align="center"
+          >
             <template #default="{ row }">
               <span>{{ evaluationByScore(row.score) }}</span>
             </template>
@@ -77,6 +83,10 @@
           <el-table-column prop="born" label="获取日期" width="100" align="center">
           </el-table-column>
         </el-table>
+        <el-divider></el-divider>
+        <div class="tip">
+          *御魂参考评级仅供参考，根据六个指标中的最大值进行划分，不考虑御魂主属性。
+        </div>
       </div>
       <div class="content__right">
         <template v-if="showEq">
@@ -123,6 +133,10 @@ const showEq = ref(eqDatas.value[0]);
 const rowClickHandle = (row) => {
   showEq.value = row;
 };
+
+const sortByRank = (a, b) => {
+  return Math.max(...a.score) - Math.max(...b.score);
+};
 </script>
 
 <style lang="scss" scoped>
@@ -133,6 +147,13 @@ const rowClickHandle = (row) => {
     align-items: center;
     padding: 0 12px;
     gap: 12px;
+    width: 100%;
+    .content__left {
+      .tip {
+        font-size: 12px;
+        color: #43425d;
+      }
+    }
     .content__right {
       display: flex;
       flex-direction: column;

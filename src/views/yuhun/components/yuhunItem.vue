@@ -24,18 +24,28 @@
         :key="props.yuhun.id + '-' + index"
       >
         <span>{{ nameDict[keyValue[0]] }}</span>
-        <span>+{{ formatValue(keyValue[1], 0) }}</span>
+        <span>+{{ formatValue(keyValue[1], zoom ? 4 : 0) }}</span>
       </li>
     </ul>
     <div class="feature">
       <span v-if="props.yuhun.single_attr === 0">2件套属性：{{ props.yuhun.suitInfo.type }}</span>
       <span v-else>固有属性：{{ props.yuhun.single_attr }}</span>
+      <br />
+      <div class="zoom">
+        <span>放大镜</span>
+        <el-switch
+          v-model="zoom"
+          :width="36"
+          active-color="#3a200d"
+          inactive-color="#3a200d"
+        ></el-switch>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps, ref } from 'vue';
 
 import { nameDict } from '@/data/yuhuninfo.js';
 
@@ -53,6 +63,8 @@ const formatValue = (val, precision = 2) => {
     return val.toFixed(precision);
   }
 };
+
+const zoom = ref(false);
 </script>
 
 <style lang="scss" scoped>
@@ -113,6 +125,11 @@ const formatValue = (val, precision = 2) => {
     color: #777;
     display: flex;
     flex-direction: column;
+    .zoom {
+      span {
+        margin-right: 8px;
+      }
+    }
   }
 }
 </style>
