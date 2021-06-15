@@ -57,7 +57,7 @@ export const routes = [
         path: 'rank',
         component: () => import('@/views/yuhun/rank.vue'),
         name: 'rank',
-        meta: { title: '跑分', icon: 'el-icon-data-line' },
+        meta: { title: '御魂评分', icon: 'el-icon-data-line' },
       },
       {
         path: 'analysis',

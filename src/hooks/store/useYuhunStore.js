@@ -6,8 +6,9 @@ export function useYuhunStore() {
   const appStore = useAppStore();
 
   const hasYYXState = computed(() => appStore.hasYYXState);
-  const getEqData = computed(() => appStore.getEqData.sort((a, b) => a.pos - b.pos) || []);
+  const getEqData = computed(() => appStore.getEqData || []);
   const getUserInfo = computed(() => appStore.getUserInfo);
+  const getEqDataL15 = computed(() => appStore.getEqData.filter((item) => item.level === 15) || []);
 
   function setYuhunStore(data) {
     appStore.setYuhunStore(data);
@@ -16,6 +17,7 @@ export function useYuhunStore() {
   return {
     hasYYXState,
     getEqData,
+    getEqDataL15,
     getUserInfo,
     setYuhunStore,
   };

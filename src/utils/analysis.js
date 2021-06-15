@@ -2,6 +2,7 @@ import { countBy, merge } from 'lodash';
 
 import { useYuhunStore } from '@/hooks/store/useYuhunStore.js';
 import { calcPoint } from '@/utils/parseJson.js';
+import { format45 } from './format.js';
 
 export function getSuitPosCountByScore(suitName, calcType, rankNum) {
   const { getEqData } = useYuhunStore();
@@ -54,5 +55,24 @@ export function calcYuhunScore(eqData) {
     8;
   // S纯速度项 = (速度/2.7)*100/6
   score[5] = ((getValue('Speed') / 2.7) * 100) / 6;
-  return score;
+  return score.map((item) => format45(item, 2));
+}
+
+export function evaluationByScore(score) {
+  const s = Math.max(...score);
+  if (s >= 100) {
+    return 'SSS';
+  } else if (s >= 90) {
+    return 'SS';
+  } else if (s >= 80) {
+    return 'S';
+  } else if (s >= 70) {
+    return 'A';
+  } else if (s >= 60) {
+    return 'B';
+  } else if (s >= 50) {
+    return 'C';
+  } else {
+    return 'N';
+  }
 }

@@ -35,12 +35,12 @@ const option = computed(() => ({
     center: ['50%', '55%'],
     startAngle: 120,
     indicator: [
-      { name: '1号位', max: Math.max(...props.data) },
-      { name: '2号位', max: Math.max(...props.data) },
-      { name: '3号位', max: Math.max(...props.data) },
-      { name: '4号位', max: Math.max(...props.data) },
-      { name: '5号位', max: Math.max(...props.data) },
-      { name: '6号位', max: Math.max(...props.data) },
+      { name: '输出', max: 100 },
+      { name: '治疗', max: 100 },
+      { name: '速度命中', max: 100 },
+      { name: '速度抵抗', max: 100 },
+      { name: '双堆', max: 100 },
+      { name: '速度', max: 100 },
     ],
   },
   series: [

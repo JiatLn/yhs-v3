@@ -22,7 +22,7 @@ const count = ref(0);
 
 const loadItems = () => {
   if (count.value < getEqData.value.length) {
-    count.value += 8;
+    count.value += 12;
   }
 };
 </script>

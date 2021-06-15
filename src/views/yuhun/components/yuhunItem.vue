@@ -3,33 +3,33 @@
     <div class="box-top">
       <div class="box-top__left">
         <div class="icon">
-          <img :src="`/src/assets/img/yuhun/${yuhun.suitInfo.id}.png`" alt="御魂图标" />
+          <img :src="`/src/assets/img/yuhun/${props.yuhun.suitInfo.id}.png`" alt="御魂图标" />
         </div>
         <div class="desc">
-          <span>{{ yuhun.suitInfo.name }} +{{ yuhun.level }}</span>
-          <span>{{ yuhun.quality }}星</span>
+          <span>{{ props.yuhun.suitInfo.name }} +{{ props.yuhun.level }}</span>
+          <span>{{ props.yuhun.quality }}星</span>
         </div>
       </div>
-      <div class="box-top__right">{{ yuhun.pos }}号位</div>
+      <div class="box-top__right">{{ props.yuhun.pos }}号位</div>
     </div>
 
     <ul class="attrs">
       <li class="attr-item">
-        <span>{{ nameDict[Object.keys(yuhun.base_attr)[0]] }}</span>
-        <span>+{{ formatValue(Object.values(yuhun.base_attr)[0], 0) }}</span>
+        <span>{{ nameDict[Object.keys(props.yuhun.base_attr)[0]] }}</span>
+        <span>+{{ formatValue(Object.values(props.yuhun.base_attr)[0], 0) }}</span>
       </li>
       <li
         class="attr-item"
-        v-for="(keyValue, index) in Object.entries(yuhun.rand_attr)"
-        :key="yuhun.id + '-' + index"
+        v-for="(keyValue, index) in Object.entries(props.yuhun.rand_attr)"
+        :key="props.yuhun.id + '-' + index"
       >
         <span>{{ nameDict[keyValue[0]] }}</span>
         <span>+{{ formatValue(keyValue[1], 0) }}</span>
       </li>
     </ul>
     <div class="feature">
-      <span v-if="yuhun.single_attr === 0">2件套属性：{{ yuhun.suitInfo.type }}</span>
-      <span v-else>固有属性：{{ yuhun.single_attr }}</span>
+      <span v-if="props.yuhun.single_attr === 0">2件套属性：{{ props.yuhun.suitInfo.type }}</span>
+      <span v-else>固有属性：{{ props.yuhun.single_attr }}</span>
     </div>
   </div>
 </template>
@@ -45,8 +45,6 @@ const props = defineProps({
     require: true,
   },
 });
-
-const yuhun = props.yuhun;
 
 const formatValue = (val, precision = 2) => {
   if (val <= 1) {
