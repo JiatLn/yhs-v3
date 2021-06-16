@@ -1,7 +1,7 @@
 import { flatten } from 'lodash';
 
 // 解析御魂json
-import { yuhunInfo, nameDict } from '@/data/yuhuninfo.js';
+import { yuhunInfo, attrDict } from '@/data/yuhuninfo.js';
 import { calcYuhunScore } from '@/utils/analysis.js';
 
 const parseYhJson = (json) => {
@@ -14,7 +14,7 @@ const parseYhJson = (json) => {
   delete json.equip_data;
   eqData.forEach((item) => {
     item.score = calcYuhunScore(item);
-    item.baseAttr = nameDict[Object.keys(item.base_attr)[0]];
+    item.baseAttr = attrDict[Object.keys(item.base_attr)[0]];
     delete item.suit_id;
   });
   return { ...json, eqData, eqDataByPos };

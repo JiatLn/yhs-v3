@@ -7,4 +7,23 @@ const format45 = (val, v2) => {
   return Math.round(val * v2) / v2;
 };
 
-export { format45 };
+const valToColor = (val) => {
+  val = val > 100 ? 100 : val;
+  if (val > 75) {
+    return '#63be7b';
+  } else if (val < 25) {
+    return '#f8696b';
+  } else {
+    return '#000';
+  }
+};
+
+const formatValue = (val, precision = 2) => {
+  if (val <= 1) {
+    return (val * 100).toFixed(precision) + '%';
+  } else {
+    return val.toFixed(precision);
+  }
+};
+
+export { format45, valToColor, formatValue };

@@ -23,7 +23,7 @@
               <div class="name">
                 {{ item.suitInfo.name }}
                 <span class="attr" v-if="[4, 6].includes(i)">
-                  「{{ nameDict[Object.keys(item.base_attr)[0]].replace('加成', '') }}」
+                  「{{ attrDict[Object.keys(item.base_attr)[0]].replace('加成', '') }}」
                 </span>
               </div>
               <span class="number">{{ format45(item.rand_attr.Speed, 2) }}</span>
@@ -39,7 +39,7 @@
 import { groupBy, sortBy, sum } from 'lodash';
 
 import { useYuhunStore } from '@/hooks/store/useYuhunStore.js';
-import { nameDict } from '@/data/yuhuninfo.js';
+import { attrDict } from '@/data/yuhuninfo.js';
 import { format45 } from '@/utils/format.js';
 
 const { getEqData } = useYuhunStore();

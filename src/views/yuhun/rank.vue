@@ -109,6 +109,7 @@ import { useYuhunStore } from '@/hooks/store/useYuhunStore.js';
 import { getSuitPosCountByScore, evaluationByScore } from '@/utils/analysis.js';
 import { yuhunOptions } from '@/data/yuhuninfo.js';
 import { getEqDatasBySuitName } from '@/utils/eqData.js';
+import { valToColor } from '@/utils/format.js';
 
 const { getEqData } = useYuhunStore();
 const suitName = ref('破势');
@@ -118,25 +119,12 @@ const score = computed(() => getSuitPosCountByScore(suitName.value, calcType.val
 
 const eqDatas = computed(() => getEqDatasBySuitName(suitName.value));
 
-function valToColor(val) {
-  val = val > 100 ? 100 : val;
-  if (val > 75) {
-    return '#63be7b';
-  } else if (val < 25) {
-    return '#f8696b';
-  } else {
-    return '#000';
-  }
-}
-
 const showEq = ref(eqDatas.value[0]);
 const rowClickHandle = (row) => {
   showEq.value = row;
 };
 
-const sortByRank = (a, b) => {
-  return Math.max(...a.score) - Math.max(...b.score);
-};
+const sortByRank = (a, b) => Math.max(...a.score) - Math.max(...b.score);
 </script>
 
 <style lang="scss" scoped>

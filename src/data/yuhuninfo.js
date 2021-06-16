@@ -220,7 +220,7 @@ const yuhunInfo = [
 
 const yuhunDict = groupBy(yuhunInfo, (item) => item.type);
 
-const nameDict = {
+const attrDict = {
   CritPower: '暴击伤害',
   Attack: '攻击',
   Speed: '速度',
@@ -240,4 +240,4 @@ const yuhunOptions = Object.entries(yuhunDict).map(([key, value]) => ({
   value: key,
 }));
 
-export { yuhunInfo, nameDict, yuhunDict, yuhunOptions };
+export { yuhunInfo, attrDict, yuhunDict, yuhunOptions };

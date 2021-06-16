@@ -15,7 +15,7 @@
 
     <ul class="attrs">
       <li class="attr-item">
-        <span>{{ nameDict[Object.keys(props.yuhun.base_attr)[0]] }}</span>
+        <span>{{ attrDict[Object.keys(props.yuhun.base_attr)[0]] }}</span>
         <span>+{{ formatValue(Object.values(props.yuhun.base_attr)[0], 0) }}</span>
       </li>
       <li
@@ -23,7 +23,7 @@
         v-for="(keyValue, index) in Object.entries(props.yuhun.rand_attr)"
         :key="props.yuhun.id + '-' + index"
       >
-        <span>{{ nameDict[keyValue[0]] }}</span>
+        <span>{{ attrDict[keyValue[0]] }}</span>
         <span>+{{ formatValue(keyValue[1], zoom ? 4 : 0) }}</span>
       </li>
     </ul>
@@ -47,7 +47,8 @@
 <script setup>
 import { defineProps, ref } from 'vue';
 
-import { nameDict } from '@/data/yuhuninfo.js';
+import { attrDict } from '@/data/yuhuninfo.js';
+import { formatValue } from '@/utils/format.js';
 
 const props = defineProps({
   yuhun: {
@@ -56,14 +57,7 @@ const props = defineProps({
   },
 });
 
-const formatValue = (val, precision = 2) => {
-  if (val <= 1) {
-    return (val * 100).toFixed(precision) + '%';
-  } else {
-    return val.toFixed(precision);
-  }
-};
-
+// 是否开启放大镜
 const zoom = ref(false);
 </script>
 
