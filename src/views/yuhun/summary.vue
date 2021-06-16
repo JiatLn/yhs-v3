@@ -7,7 +7,9 @@
         <el-descriptions-item label="userId">
           <el-tag size="small">{{ getUserInfo.user_id }}</el-tag>
         </el-descriptions-item>
-        <el-descriptions-item label="日期">{{ getUserInfo.time_stamp }}</el-descriptions-item>
+        <el-descriptions-item label="导出日期">
+          {{ formatDate(getUserInfo.time_stamp) }}
+        </el-descriptions-item>
         <el-descriptions-item label="御魂数量">
           {{ getEqData.length }}
         </el-descriptions-item>
@@ -19,6 +21,7 @@
 
 <script setup>
 import { useYuhunStore } from '@/hooks/store/useYuhunStore.js';
+import { formatDate } from '@/utils/format.js';
 
 const { getEqData, getUserInfo, hasYYXState } = useYuhunStore();
 </script>

@@ -81,6 +81,9 @@
             </template>
           </el-table-column>
           <el-table-column prop="born" label="获取日期" width="100" align="center">
+            <template #default="{ row }">
+              <span>{{ formatDate(row.born) }}</span>
+            </template>
           </el-table-column>
         </el-table>
         <el-divider></el-divider>
@@ -109,7 +112,7 @@ import { useYuhunStore } from '@/hooks/store/useYuhunStore.js';
 import { getSuitPosCountByScore, evaluationByScore } from '@/utils/analysis.js';
 import { yuhunOptions } from '@/data/yuhuninfo.js';
 import { getEqDatasBySuitName } from '@/utils/eqData.js';
-import { valToColor } from '@/utils/format.js';
+import { valToColor, formatDate } from '@/utils/format.js';
 
 const { getEqData } = useYuhunStore();
 const suitName = ref('破势');

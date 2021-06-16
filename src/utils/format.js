@@ -1,3 +1,5 @@
+import { unix } from 'dayjs';
+
 // 四舍五入  参数（数字，小数点保留位数)
 const format45 = (val, v2) => {
   if (isNaN(val) || val == undefined || val == null) {
@@ -26,4 +28,8 @@ const formatValue = (val, precision = 2) => {
   }
 };
 
-export { format45, valToColor, formatValue };
+const formatDate = (timestamp, formatText = 'YYYY/MM/DD') => {
+  return unix(timestamp).format(formatText);
+};
+
+export { format45, valToColor, formatValue, formatDate };
