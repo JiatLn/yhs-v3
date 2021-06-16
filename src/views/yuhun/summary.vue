@@ -1,6 +1,6 @@
 <template>
   <div class="warpper">
-    <template v-if="getEqData">
+    <template v-if="hasYYXState">
       <el-descriptions title="账号信息" size="medium" class="desc">
         <el-descriptions-item label="用户名">{{ getUserInfo.user_name }}</el-descriptions-item>
         <el-descriptions-item label="服务器">{{ getUserInfo.server_name }}</el-descriptions-item>
@@ -20,7 +20,7 @@
 <script setup>
 import { useYuhunStore } from '@/hooks/store/useYuhunStore.js';
 
-const { getEqData, getUserInfo } = useYuhunStore();
+const { getEqData, getUserInfo, hasYYXState } = useYuhunStore();
 </script>
 
 <style lang="scss" scoped>
