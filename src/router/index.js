@@ -68,6 +68,20 @@ export const routes = [
     ],
   },
   {
+    path: '/calc',
+    component: Layout,
+    alwaysShow: false,
+    meta: { title: '御魂计算器', icon: 'el-icon-coffee-cup' },
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/calc/panel.vue'),
+        name: 'panel',
+        meta: { title: '面板选择', icon: 'el-icon-watermelon' },
+      },
+    ],
+  },
+  {
     path: '/:catchAll(.*)',
     name: '404',
     redirect: '/',
