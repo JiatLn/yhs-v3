@@ -11,11 +11,11 @@ const parseYhJson = (json) => {
     eq.suitInfo = yuhunInfo.filter((item) => item.id === eq.suit_id)[0];
     eqDataByPos[eq.pos - 1].push(eq);
   });
-  delete json.equip_data;
+  Reflect.deleteProperty(json, 'equip_data');
   eqData.forEach((item) => {
     item.score = calcYuhunScore(item);
     item.baseAttr = attrDict[Object.keys(item.base_attr)[0]];
-    delete item.suit_id;
+    Reflect.deleteProperty(item, 'suit_id');
   });
   return { ...json, eqData, eqDataByPos };
 };
