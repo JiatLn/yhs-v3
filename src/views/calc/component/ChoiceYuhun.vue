@@ -59,7 +59,7 @@ const total = computed(() => {
 });
 // 是否为 2+2+2
 const is222 = computed(() => {
-  return suitList.value.filter(item => item.count === 2).length > 1;
+  return suitList.value.filter((item) => item.count === 2).length > 1;
 });
 // 点击了第n个位置的套装
 const nthOfSuit = ref(0);
@@ -68,6 +68,7 @@ const resetSuit = () => {
   suitList.value = [];
   checked4.value = true;
   isShow.value = false;
+  nthOfSuit.value = 0;
 };
 
 // dialog相关
@@ -78,7 +79,7 @@ const openDialog = (index = 0) => {
   isShow.value = !isShow.value;
 };
 const checked4 = ref(true);
-const changeSuit = id => {
+const changeSuit = (id) => {
   if (checked4.value) {
     if (total.value < 4) {
       suitList.value.push({ id, count: 4 });
@@ -101,7 +102,7 @@ const changeSuit = id => {
   // 排序
   suitList.value = suitList.value.sort((a, b) => b.count - a.count);
 };
-const tabClick = bool => {
+const tabClick = (bool) => {
   if (is222.value) {
     console.log(`当前已选择${total.value}个御魂，无法替换成四件套`);
     return false;
@@ -219,11 +220,11 @@ const tabClick = bool => {
     }
     &::-webkit-scrollbar-thumb {
       border-radius: 10px;
-      -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
       background: rgba(0, 0, 0, 0.2);
     }
     &::-webkit-scrollbar-track {
-      -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
       border-radius: 0;
       background: rgba(0, 0, 0, 0.1);
     }
