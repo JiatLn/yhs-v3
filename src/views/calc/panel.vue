@@ -81,6 +81,7 @@
         <div class="items">
           <div class="item">
             <div class="label">属性限制</div>
+            <limit-attr></limit-attr>
           </div>
           <div class="item">
             <div class="label">排除已收藏的方案的御魂</div>
@@ -106,6 +107,7 @@
 import { ref, reactive } from '@vue/reactivity';
 
 import ChoiceYuhun from './component/ChoiceYuhun.vue';
+import LimitAttr from './component/LimitAttr.vue';
 import { targetOptions, pos2AttrOptions, pos4AttrOptions, pos6AttrOptions } from '@/data/calc.js';
 
 const xiaoguo = ref('输出伤害');
@@ -119,6 +121,7 @@ const posAttrs = reactive({
 <style lang="scss" scoped>
 .warpper {
   flex-direction: column;
+  user-select: none;
 }
 
 .panels {
