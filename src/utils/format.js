@@ -1,7 +1,7 @@
 import { unix } from 'dayjs';
 
 // 四舍五入  参数（数字，小数点保留位数)
-const format45 = (val, v2) => {
+const format45 = (val, v2 = 2) => {
   if (isNaN(val) || val == undefined || val == null) {
     return null;
   }
@@ -21,7 +21,7 @@ const valToColor = (val) => {
 };
 
 const formatValue = (val, precision = 2) => {
-  if (val <= 1) {
+  if (val <= 2) {
     return (val * 100).toFixed(precision) + '%';
   } else {
     return val.toFixed(precision);

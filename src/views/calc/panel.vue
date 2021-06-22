@@ -1,5 +1,7 @@
 <template>
   <div class="warpper">
+    <pick-hero></pick-hero>
+    <el-divider></el-divider>
     <div class="panels">
       <div class="panel panel__left">
         <div class="title">御魂指定</div>
@@ -104,8 +106,9 @@
 </template>
 
 <script setup>
-import { ref, reactive } from '@vue/reactivity';
+import { ref, reactive } from 'vue';
 
+import PickHero from './component/PickHero.vue';
 import ChoiceYuhun from './component/ChoiceYuhun.vue';
 import LimitAttr from './component/LimitAttr.vue';
 import { targetOptions, pos2AttrOptions, pos4AttrOptions, pos6AttrOptions } from '@/data/calc.js';
