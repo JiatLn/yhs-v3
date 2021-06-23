@@ -1,6 +1,8 @@
 <template>
   <div class="limit-attr">
-    <div class="limit-btn" @click="openDialog">添加+</div>
+    <div class="limit-btn" @click="openDialog">
+      {{ limitTip }}
+    </div>
 
     <!-- 弹窗 -->
     <div class="dialog" v-show="isShow">
@@ -13,8 +15,11 @@
           <div class="attr-items">
             <div
               class="attr-item"
-              :class="{ active: limitAttrId === attr.id }"
-              v-for="attr in attrList"
+              :class="{
+                'is-active': limitAttrIdx === attr.id,
+                'is-edit': calcStore.limitList[attr.id].isLimited,
+              }"
+              v-for="attr in limitAttrList"
               :key="'attr' + attr.id"
               @click="changeLimitAttr(attr.id)"
             >
@@ -26,24 +31,25 @@
           <span>速度属性范围</span>
           <div class="limit-input">
             <el-input-number
-              v-model="limitRange[0]"
+              v-model="range[0]"
               controls-position="right"
-              :min="0"
-              :max="limitRange[1]"
+              :min="attrMin"
               :step="1"
+              @change="onChangeLimit"
             ></el-input-number>
-            <span>-</span>
+            <span> - </span>
             <el-input-number
-              v-model="limitRange[1]"
+              v-model="range[1]"
               controls-position="right"
-              :min="limitRange[0]"
+              :min="range[0]"
               :step="1"
+              @change="onChangeLimit"
             ></el-input-number>
           </div>
           <div class="btns">
-            <div class="btn">超星</div>
-            <div class="btn">吃星</div>
-            <div class="btn">重置</div>
+            <!-- <div class="btn">超星</div>
+            <div class="btn">吃星</div> -->
+            <div class="btn" @click="resetLimit">重置</div>
           </div>
         </div>
       </div>
@@ -52,34 +58,51 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
-// dialog相关
+import { limitAttrList } from '@/data/calc.js'; // 限制属性列表
+import { format45, formatValue } from '@/utils/format.js';
+import useCalcStore from '@/store/calc.js';
+
+const calcStore = useCalcStore();
+
 // 是否打开弹窗
-const isShow = ref(false);
-const openDialog = (index = 0) => {
+const isShow = ref(true);
+const openDialog = () => {
   isShow.value = !isShow.value;
 };
 
-// 限制属性列表
-const attrList = [
-  { id: 0, name: 'attack', label: '攻击' },
-  { id: 1, name: '', label: '暴击' },
-  { id: 2, name: '', label: '暴击伤害' },
-  { id: 3, name: '', label: '速度' },
-  { id: 4, name: '', label: '防御' },
-  { id: 5, name: '', label: '生命' },
-  { id: 6, name: '', label: '效果命中' },
-  { id: 7, name: '', label: '效果抵抗' },
-];
+const limitTip = computed(() => {
+  return calcStore.getLimitedList.length
+    ? `已限制${calcStore.getLimitedList.length}种属性`
+    : '添加+';
+});
 
-// 属性范围
-const limitRange = ref([156, 158]);
-// 当前属性id
-const limitAttrId = ref(3);
+const attrMin = computed(() => {
+  return formatValue(
+    format45(calcStore.getHeroPanel[calcStore.limitList[limitAttrIdx.value].attr], 2),
+    2,
+    false,
+  );
+});
+
+// 当前限制属性索引
+const limitAttrIdx = ref(3);
+const range = computed(() => {
+  return calcStore.limitList[limitAttrIdx.value].interval;
+});
 
 const changeLimitAttr = (id) => {
-  limitAttrId.value = id;
+  limitAttrIdx.value = id;
+};
+
+const onChangeLimit = () => {
+  calcStore.limitList[limitAttrIdx.value].isLimited = true;
+};
+
+const resetLimit = () => {
+  calcStore.limitList[limitAttrIdx.value].interval = [0, undefined];
+  calcStore.limitList[limitAttrIdx.value].isLimited = false;
 };
 </script>
 
@@ -154,9 +177,15 @@ const changeLimitAttr = (id) => {
           color: #584440;
           border: 1px solid #917a6c;
           transition: 0.6s;
-          &.active {
+          position: relative;
+          &.is-active {
             color: #e6dbcd;
             background-color: #584440;
+          }
+          &.is-edit::after {
+            content: '✍️';
+            position: absolute;
+            right: 4px;
           }
         }
       }

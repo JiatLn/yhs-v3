@@ -17,11 +17,22 @@
 </template>
 
 <script setup>
+import { watch } from 'vue';
+
 import { heroOptions } from '@/data/hero.js';
 import { format45, formatValue } from '@/utils/format.js';
 import useCalcStore from '@/store/calc.js';
 
 const calcStore = useCalcStore();
+
+// 所选式神变化时，限制的面板会重置
+watch(
+  () => calcStore.hero,
+  () => {
+    calcStore.resetLimitList();
+  },
+  { deep: true },
+);
 </script>
 
 <style lang="scss" scoped>

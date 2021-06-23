@@ -94,4 +94,15 @@ const pos6AttrOptions = [
   ...baseAttr,
 ];
 
-export { targetOptions, pos2AttrOptions, pos4AttrOptions, pos6AttrOptions };
+const limitAttrList = [
+  { id: 0, name: 'attack', label: '攻击' },
+  { id: 1, name: '', label: '暴击' },
+  { id: 2, name: '', label: '暴击伤害' },
+  { id: 3, name: '', label: '速度' },
+  { id: 4, name: '', label: '防御' },
+  { id: 5, name: '', label: '生命' },
+  { id: 6, name: '', label: '效果命中' },
+  { id: 7, name: '', label: '效果抵抗' },
+];
+
+export { targetOptions, pos2AttrOptions, pos4AttrOptions, pos6AttrOptions, limitAttrList };

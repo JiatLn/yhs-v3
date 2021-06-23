@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 
 import { heroPane } from '@/data/heroData.js';
+import { limitAttrList } from '@/data/calc.js';
 
 const useCalcStore = defineStore({
   id: 'calc',
@@ -8,6 +9,11 @@ const useCalcStore = defineStore({
     return {
       hero: ['SSR', '阿修罗'],
       suitList: [],
+      limitList: Array.from(limitAttrList, (item) => ({
+        attr: item.label,
+        isLimited: false,
+        interval: [0, undefined],
+      })),
     };
   },
   actions: {
@@ -22,6 +28,13 @@ const useCalcStore = defineStore({
     },
     resetSuit() {
       this.suitList = [];
+    },
+    resetLimitList() {
+      this.limitList = Array.from(limitAttrList, (item) => ({
+        attr: item.label,
+        isLimited: false,
+        interval: [0, undefined],
+      }));
     },
   },
   getters: {
@@ -43,6 +56,10 @@ const useCalcStore = defineStore({
     },
     is222() {
       return this.suitList.filter((item) => item.count === 2).length > 1;
+    },
+    // 获取限制的属性列表
+    getLimitedList() {
+      return this.limitList.filter((item) => item.isLimited);
     },
   },
 });

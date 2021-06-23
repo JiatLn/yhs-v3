@@ -20,11 +20,15 @@ const valToColor = (val) => {
   }
 };
 
-const formatValue = (val, precision = 2) => {
+const formatValue = (val, precision = 2, hasSuffix = true) => {
   if (val <= 2) {
-    return (val * 100).toFixed(precision) + '%';
+    if (hasSuffix) {
+      return (val * 100).toFixed(precision) + '%';
+    } else {
+      return Number((val * 100).toFixed(precision));
+    }
   } else {
-    return val.toFixed(precision);
+    return Number(val.toFixed(precision));
   }
 };
 
