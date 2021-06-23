@@ -2,30 +2,34 @@
   <div class="choice">
     <div
       class="icon"
-      v-for="(suit, index) in suitList"
+      v-for="(suit, index) in calcStore.getSuitList"
       :key="'suit' + index"
       @click="openDialog(index)"
     >
       <img :src="`/src/assets/img/yuhun/${suit.id}.png`" alt="御魂图标" />
     </div>
-    <div class="icon icon-add" v-show="total < 6" @click="openDialog(suitList.length)">
+    <div
+      class="icon icon-add"
+      v-show="calcStore.getSuitCount < 6"
+      @click="openDialog(calcStore.getSuitLength)"
+    >
       <i class="el-icon-plus"></i>
     </div>
-    <div class="clear-btn" @click="resetSuit" v-show="total > 0">清空</div>
-    <div class="dialog" v-show="isShow">
+    <div class="clear-btn" @click="resetStatus" v-show="calcStore.getSuitCount > 0">清空</div>
+    <div class="dialog" v-show="data.isShow">
       <div class="marker"></div>
       <div class="dialog__top">
         <div class="tabs">
           <div class="tab-item" @click="tabClick(true)">
-            <div class="checkbox" :class="{ 'is-checked': checked4 }"></div>
+            <div class="checkbox" :class="{ 'is-checked': data.checked4 }"></div>
             <span>四件套</span>
           </div>
           <div class="tab-item" @click="tabClick(false)">
-            <div class="checkbox" :class="{ 'is-checked': !checked4 }"></div>
+            <div class="checkbox" :class="{ 'is-checked': !data.checked4 }"></div>
             <span>两件套</span>
           </div>
         </div>
-        <div class="close-btn" @click="isShow = false">×</div>
+        <div class="close-btn" @click="data.isShow = false">×</div>
       </div>
       <div class="dialog__body">
         <div class="yuhun-items">
@@ -48,66 +52,63 @@
 </template>
 
 <script setup>
+import { reactive } from 'vue';
+
 import { yuhunInfo } from '@/data/yuhuninfo.js';
-import { assignIn } from 'lodash';
-import { ref, computed } from 'vue';
+import useCalcStore from '@/store/calc.js';
 
-const suitList = ref([]);
-// 计算御魂套装数量
-const total = computed(() => {
-  return suitList.value.reduce((prev, item) => prev + item.count, 0);
-});
-// 是否为 2+2+2
-const is222 = computed(() => {
-  return suitList.value.filter((item) => item.count === 2).length > 1;
-});
-// 点击了第n个位置的套装
-const nthOfSuit = ref(0);
+const calcStore = useCalcStore();
 
-const resetSuit = () => {
-  suitList.value = [];
-  checked4.value = true;
-  isShow.value = false;
-  nthOfSuit.value = 0;
+const data = reactive({
+  // 是否打开弹窗
+  isShow: false,
+  // 是否勾选四件套
+  checked4: true,
+  // 点击了第n个位置的套装
+  idxOfSuit: 0,
+});
+
+const resetStatus = () => {
+  calcStore.resetSuit();
+  data.isShow = false;
+  data.checked4 = true;
+  data.idxOfSuit = 0;
 };
 
-// dialog相关
-// 是否打开弹窗
-const isShow = ref(false);
 const openDialog = (index = 0) => {
-  nthOfSuit.value = index;
-  isShow.value = !isShow.value;
+  data.idxOfSuit = index;
+  data.isShow = true;
+  if (index === 0 && !calcStore.is222) {
+    data.checked4 = true;
+  }
 };
-const checked4 = ref(true);
+
 const changeSuit = (id) => {
-  if (checked4.value) {
-    if (total.value < 4) {
-      suitList.value.push({ id, count: 4 });
+  // 四件套
+  if (data.checked4) {
+    if (calcStore.getSuitCount < 4) {
+      calcStore.addSuit({ id, count: 4 });
     } else {
-      suitList.value[0].id = id;
+      calcStore.updateSuit(0, id);
     }
-    checked4.value = false;
+    data.checked4 = false;
   } else {
-    if (total.value < 6) {
-      suitList.value.push({ id, count: 2 });
+    // 二件套 判断是新增还是修改
+    if (calcStore.getSuitCount < 2 || data.idxOfSuit === calcStore.getSuitLength) {
+      calcStore.addSuit({ id, count: 2 });
     } else {
-      if (is222.value) {
-        suitList.value[nthOfSuit.value].id = id;
-      } else {
-        suitList.value[1].id = id;
-      }
+      calcStore.updateSuit(data.idxOfSuit, id);
     }
   }
-  isShow.value = false;
-  // 排序
-  suitList.value = suitList.value.sort((a, b) => b.count - a.count);
+  data.isShow = false;
 };
+
 const tabClick = (bool) => {
-  if (is222.value) {
-    console.log(`当前已选择${total.value}个御魂，无法替换成四件套`);
+  if (calcStore.is222) {
+    console.log(`当前已选择${calcStore.getSuitCount}个御魂，无法替换成四件套`);
     return false;
   }
-  checked4.value = bool;
+  data.checked4 = bool;
 };
 </script>
 

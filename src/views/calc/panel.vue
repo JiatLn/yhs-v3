@@ -101,6 +101,7 @@
     <div class="">
       <span>{{ xiaoguo }}</span>
       <span>{{ posAttrs }}</span>
+      <span>{{ calcStore.$state }}</span>
     </div>
   </div>
 </template>
@@ -112,6 +113,9 @@ import PickHero from './component/PickHero.vue';
 import ChoiceYuhun from './component/ChoiceYuhun.vue';
 import LimitAttr from './component/LimitAttr.vue';
 import { targetOptions, pos2AttrOptions, pos4AttrOptions, pos6AttrOptions } from '@/data/calc.js';
+import useCalcStore from '@/store/calc.js';
+
+const calcStore = useCalcStore();
 
 const xiaoguo = ref('输出伤害');
 const posAttrs = reactive({

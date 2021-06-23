@@ -3,11 +3,11 @@
     <el-cascader-panel
       class="pick-hero__left"
       :options="heroOptions"
-      v-model="hero"
+      v-model="calcStore.hero"
     ></el-cascader-panel>
     <div class="pick-hero__right">
       <ul class="attr-items">
-        <li class="attr-item" v-for="(value, key, index) in heroPane[hero[1]]" :key="index">
+        <li class="attr-item" v-for="(value, key, index) in calcStore.getHeroPanel" :key="index">
           <span>{{ key }}</span>
           <span>{{ formatValue(format45(value, 2), 0) }}</span>
         </li>
@@ -17,13 +17,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-
 import { heroOptions } from '@/data/hero.js';
-import { heroPane } from '@/data/heroData.js';
 import { format45, formatValue } from '@/utils/format.js';
+import useCalcStore from '@/store/calc.js';
 
-const hero = ref(['SP', '烬天玉藻前']);
+const calcStore = useCalcStore();
 </script>
 
 <style lang="scss" scoped>
