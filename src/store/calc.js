@@ -14,6 +14,9 @@ const useCalcStore = defineStore({
         isLimited: false,
         interval: [0, undefined],
       })),
+      onlySix: true,
+      onlyFull: true,
+      unWeared: false,
     };
   },
   actions: {

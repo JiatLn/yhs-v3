@@ -90,9 +90,17 @@
           </div>
           <div class="item">
             <div class="label">御魂选择范围</div>
+            <div class="radio-items">
+              <el-radio v-model="calcStore.unWeared" :label="false">全 部</el-radio>
+              <el-radio v-model="calcStore.unWeared" :label="true">未装备</el-radio>
+            </div>
           </div>
           <div class="item">
             <div class="label">星级等级限制</div>
+            <div class="check-items">
+              <el-checkbox v-model="calcStore.onlySix">仅六星</el-checkbox>
+              <el-checkbox v-model="calcStore.onlyFull">仅满级</el-checkbox>
+            </div>
           </div>
         </div>
       </div>
@@ -202,10 +210,47 @@ const posAttrs = reactive({
       }
     }
     &.panel__right {
-      .item {
-        flex-direction: column;
-        .label {
-          width: 100%;
+      .items {
+        gap: 8px;
+        .item {
+          flex-direction: column;
+          gap: 8px;
+          .label {
+            width: 100%;
+          }
+          .radio-items {
+            :deep .el-radio__inner {
+              background-color: #4b5ee9;
+              border-color: #3c2e1a;
+              width: 20px;
+              height: 20px;
+              &::after {
+                height: 6px;
+                width: 6px;
+              }
+            }
+            :deep .el-radio__label {
+              color: #2c2824;
+            }
+          }
+          .check-items {
+            :deep .el-checkbox__inner {
+              border-radius: 6px;
+              background-color: #4b5ee9;
+              border-color: #3c2e1a;
+              width: 20px;
+              height: 20px;
+              &::after {
+                left: 7px;
+                top: 2px;
+                height: 12px;
+                border-width: 2px;
+              }
+            }
+            :deep .el-checkbox__label {
+              color: #2c2824;
+            }
+          }
         }
       }
     }

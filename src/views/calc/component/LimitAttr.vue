@@ -67,7 +67,7 @@ import useCalcStore from '@/store/calc.js';
 const calcStore = useCalcStore();
 
 // 是否打开弹窗
-const isShow = ref(true);
+const isShow = ref(false);
 const openDialog = () => {
   isShow.value = !isShow.value;
 };
