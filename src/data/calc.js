@@ -105,4 +105,26 @@ const limitAttrList = [
   { id: 7, name: '', label: '效果抵抗' },
 ];
 
-export { targetOptions, pos2AttrOptions, pos4AttrOptions, pos6AttrOptions, limitAttrList };
+const effectiveAttrsDict = {
+  输出伤害: ['AttackRate', 'Attack', 'CritPower'],
+  双重暴击: ['AttackRate', 'Attack', 'CritPower'],
+  生命治疗: ['HpRate', 'CritPower'],
+  命抗双修: ['EffectHitRate', 'EffectResistRate'],
+  攻击: ['AttackRate', 'Attack'],
+  生命: ['HpRate', 'Hp'],
+  防御: ['DefenseRate', 'Defense'],
+  暴击伤害: ['CritPower'],
+  暴击: ['CritRate'],
+  速度: ['Speed'],
+  效果命中: ['EffectHitRate'],
+  效果抵抗: ['EffectResistRate'],
+};
+
+export {
+  targetOptions,
+  pos2AttrOptions,
+  pos4AttrOptions,
+  pos6AttrOptions,
+  limitAttrList,
+  effectiveAttrsDict,
+};

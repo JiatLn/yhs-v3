@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 
 import { heroPane } from '@/data/heroData.js';
-import { limitAttrList } from '@/data/calc.js';
+import { limitAttrList, effectiveAttrsDict } from '@/data/calc.js';
 
 const useCalcStore = defineStore({
   id: 'calc',
@@ -17,6 +17,12 @@ const useCalcStore = defineStore({
       onlySix: true,
       onlyFull: true,
       unWeared: false,
+      target: '输出伤害',
+      mainAttrs: {
+        pos2: ['攻击加成'],
+        pos4: ['攻击加成'],
+        pos6: ['暴击', '暴击伤害'],
+      },
     };
   },
   actions: {
@@ -63,6 +69,23 @@ const useCalcStore = defineStore({
     // 获取限制的属性列表
     getLimitedList() {
       return this.limitList.filter((item) => item.isLimited);
+    },
+    // 获取计算相关属性：包括目标以及限制到的属性
+    getEffectiveAttrs() {
+      let effectiveAttrsList = effectiveAttrsDict[this.target];
+      this.limitList
+        .filter((item) => item.isLimited)
+        .forEach((limit) => {
+          effectiveAttrsList.push(...effectiveAttrsDict[limit.attr]);
+        });
+      return [...new Set(effectiveAttrsList)];
+    },
+    // [非自由]属性 有上限限制的属性
+    // 如果速度有上限，那+3速度和+5速度 都有可能是最佳属性 则不能比较速度属性
+    getNotFreeAttrs() {
+      return this.limitList
+        .filter((item) => item.isLimited && item.interval[1] > 0)
+        .map((limit) => limit.attr);
     },
   },
 });

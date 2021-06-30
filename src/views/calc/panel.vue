@@ -12,7 +12,7 @@
           </div>
           <div class="item">
             <div class="label">效果指标</div>
-            <el-select class="selector" v-model="xiaoguo" placeholder="请选择">
+            <el-select class="selector" v-model="calcStore.target" placeholder="请选择">
               <el-option
                 v-for="item in targetOptions"
                 :key="item.value"
@@ -26,7 +26,7 @@
             <div class="label">2号位主属性</div>
             <el-select
               class="selector"
-              v-model="posAttrs.pos2"
+              v-model="calcStore.mainAttrs.pos2"
               multiple
               collapse-tags
               placeholder="请选择"
@@ -44,7 +44,7 @@
             <div class="label">4号位主属性</div>
             <el-select
               class="selector"
-              v-model="posAttrs.pos4"
+              v-model="calcStore.mainAttrs.pos4"
               multiple
               collapse-tags
               placeholder="请选择"
@@ -62,7 +62,7 @@
             <div class="label">6号位主属性</div>
             <el-select
               class="selector"
-              v-model="posAttrs.pos6"
+              v-model="calcStore.mainAttrs.pos6"
               multiple
               collapse-tags
               placeholder="请选择"
@@ -107,30 +107,26 @@
     </div>
     <el-divider></el-divider>
     <div class="">
-      <span>{{ xiaoguo }}</span>
-      <span>{{ posAttrs }}</span>
+      <el-button size="mini" type="primary" round @click="start">开始计算</el-button>
       <span>{{ calcStore.$state }}</span>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue';
-
 import PickHero from './component/PickHero.vue';
 import ChoiceYuhun from './component/ChoiceYuhun.vue';
 import LimitAttr from './component/LimitAttr.vue';
 import { targetOptions, pos2AttrOptions, pos4AttrOptions, pos6AttrOptions } from '@/data/calc.js';
 import useCalcStore from '@/store/calc.js';
+import { filterYuhunList } from '@/lib/calc.js';
 
 const calcStore = useCalcStore();
 
-const xiaoguo = ref('输出伤害');
-const posAttrs = reactive({
-  pos2: ['攻击加成'],
-  pos4: ['攻击加成'],
-  pos6: ['暴击', '暴击伤害'],
-});
+const start = () => {
+  const yuhunList = filterYuhunList();
+  console.log(yuhunList);
+};
 </script>
 
 <style lang="scss" scoped>
