@@ -9,6 +9,9 @@ function pathResolve(dir) {
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => ({
+  server: {
+    port: 2021,
+  },
   resolve: {
     // alias: {
     //   '@': path.resolve(__dirname, 'src'),
