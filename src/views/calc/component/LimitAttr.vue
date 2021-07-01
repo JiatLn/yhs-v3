@@ -204,10 +204,10 @@ const resetLimit = () => {
         display: flex;
         gap: 8px;
         align-items: center;
-        :deep .el-input-number {
+        :deep(.el-input-number) {
           width: 93px;
         }
-        :deep .el-input__inner {
+        :deep(.el-input__inner) {
           padding: 0;
           height: 30px;
           width: 60px;
@@ -216,8 +216,8 @@ const resetLimit = () => {
           color: #584440;
           border: 1px solid #826b5a;
         }
-        :deep .el-input-number__decrease,
-        :deep .el-input-number__increase {
+        :deep(.el-input-number__decrease),
+        :deep(.el-input-number__increase) {
           background-color: #826b5a;
           color: #c5b3a1;
           border: none;

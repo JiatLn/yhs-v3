@@ -176,7 +176,7 @@ const start = () => {
       .item {
         .selector {
           width: 180px;
-          :deep .el-input__inner {
+          :deep(.el-input__inner) {
             background-color: #826b5a;
             border-radius: 0;
             border: none;
@@ -187,7 +187,7 @@ const start = () => {
               color: #c5b3a1;
             }
           }
-          :deep .el-tag {
+          :deep(.el-tag) {
             background-color: #826b5a;
             border-radius: 0;
             border-color: #c5b3a1;
@@ -215,7 +215,7 @@ const start = () => {
             width: 100%;
           }
           .radio-items {
-            :deep .el-radio__inner {
+            :deep(.el-radio__inner) {
               background-color: #4b5ee9;
               border-color: #3c2e1a;
               width: 20px;
@@ -225,12 +225,12 @@ const start = () => {
                 width: 6px;
               }
             }
-            :deep .el-radio__label {
+            :deep(.el-radio__label) {
               color: #2c2824;
             }
           }
           .check-items {
-            :deep .el-checkbox__inner {
+            :deep(.el-checkbox__inner) {
               border-radius: 6px;
               background-color: #4b5ee9;
               border-color: #3c2e1a;
@@ -243,7 +243,7 @@ const start = () => {
                 border-width: 2px;
               }
             }
-            :deep .el-checkbox__label {
+            :deep(.el-checkbox__label) {
               color: #2c2824;
             }
           }
