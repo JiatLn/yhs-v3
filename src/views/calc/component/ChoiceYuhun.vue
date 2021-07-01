@@ -35,7 +35,7 @@
         <div class="yuhun-items">
           <div
             class="yuhun-item"
-            v-for="yuhun in yuhunInfo"
+            v-for="yuhun in suitList"
             :key="yuhun.id"
             @click="changeSuit(yuhun.id)"
           >
@@ -52,9 +52,9 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue';
+import { reactive, computed } from 'vue';
 
-import { yuhunInfo } from '@/data/yuhuninfo.js';
+import { yuhunInfo, twoSuitOptions } from '@/data/yuhuninfo.js';
 import useCalcStore from '@/store/calc.js';
 
 const calcStore = useCalcStore();
@@ -66,6 +66,14 @@ const data = reactive({
   checked4: true,
   // 点击了第n个位置的套装
   idxOfSuit: 0,
+});
+
+const suitList = computed(() => {
+  if (data.checked4) {
+    return yuhunInfo;
+  } else {
+    return twoSuitOptions.concat(yuhunInfo);
+  }
 });
 
 const resetStatus = () => {

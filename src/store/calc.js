@@ -83,10 +83,16 @@ const useCalcStore = defineStore({
     // [非自由]属性 有上限限制的属性
     // 如果速度有上限，那+3速度和+5速度 都有可能是最佳属性 则不能比较速度属性
     getNotFreeAttrs() {
-      return this.limitList
+      let notFreeAttrs = [];
+      this.limitList
         .filter((item) => item.isLimited && item.interval[1] > 0)
-        .map((limit) => limit.attr);
+        .forEach((limit) => {
+          notFreeAttrs.push(...effectiveAttrsDict[limit.attr]);
+        });
+      return [...new Set(notFreeAttrs)];
     },
+    // 获取候选套装列表
+    getCandidateSuits() {},
   },
 });
 

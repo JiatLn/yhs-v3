@@ -220,7 +220,7 @@ let yuhunInfo = [
 
 yuhunInfo = yuhunInfo.sort((a, b) => a.id - b.id);
 
-const yuhunDict = groupBy(yuhunInfo, item => item.type);
+const yuhunDict = groupBy(yuhunInfo, (item) => item.type);
 
 const attrDict = {
   CritPower: '暴击伤害',
@@ -238,8 +238,46 @@ const attrDict = {
 
 const yuhunOptions = Object.entries(yuhunDict).map(([key, value]) => ({
   label: key,
-  children: value.map(item => ({ label: item.name, value: item.name })),
+  children: value.map((item) => ({ label: item.name, value: item.name })),
   value: key,
 }));
 
-export { yuhunInfo, attrDict, yuhunDict, yuhunOptions };
+const twoSuitOptions = [
+  {
+    name: '暴击',
+    id: 300010,
+    type: '暴击',
+  },
+  {
+    name: '攻击加成',
+    id: 300010,
+    type: '攻击加成',
+  },
+  {
+    name: '首领御魂',
+    id: 300010,
+    type: '首领御魂',
+  },
+  {
+    name: '效果命中',
+    id: 300010,
+    type: '效果命中',
+  },
+  {
+    name: '效果抵抗',
+    id: 300010,
+    type: '效果抵抗',
+  },
+  {
+    name: '生命加成',
+    id: 300010,
+    type: '生命加成',
+  },
+  {
+    name: '防御加成',
+    id: 300010,
+    type: '防御加成',
+  },
+];
+
+export { yuhunInfo, attrDict, yuhunDict, yuhunOptions, twoSuitOptions };
