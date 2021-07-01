@@ -22,4 +22,15 @@ const hasIntersection = (A, B) => {
   return !!intersection(A, B).length;
 };
 
-export { calcCombNum, hasIntersection };
+/**
+ * 两个集合的差集
+ *
+ * @param {*} A array
+ * @param {*} B array
+ * @return {*} A - B
+ */
+const differenceSet = (A, B) => {
+  return A.filter((v) => B.indexOf(v) == -1);
+};
+
+export { calcCombNum, hasIntersection, differenceSet };

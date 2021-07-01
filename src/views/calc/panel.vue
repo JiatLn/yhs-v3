@@ -108,7 +108,7 @@
     <el-divider></el-divider>
     <div class="">
       <el-button size="mini" type="primary" round @click="start">开始计算</el-button>
-      <span>{{ calcStore.$state }}</span>
+      <span>{{ calcStore.$state.suitList }}</span>
     </div>
   </div>
 </template>
@@ -119,12 +119,12 @@ import ChoiceYuhun from './component/ChoiceYuhun.vue';
 import LimitAttr from './component/LimitAttr.vue';
 import { targetOptions, pos2AttrOptions, pos4AttrOptions, pos6AttrOptions } from '@/data/calc.js';
 import useCalcStore from '@/store/calc.js';
-import { filterYuhunList } from '@/lib/calc.js';
+import { pruneYuhunList } from '@/lib/calc.js';
 
 const calcStore = useCalcStore();
 
 const start = () => {
-  const yuhunList = filterYuhunList();
+  const yuhunList = pruneYuhunList();
   console.log(yuhunList);
 };
 </script>
