@@ -1,9 +1,11 @@
-import { groupBy, sortBy, sum } from 'lodash';
+import { groupBy, sortBy, sum, uniqWith, isEqual } from 'lodash';
+import { product } from 'cartesian-product-generator';
 
 import { useYuhunStore } from '@/hooks/store/useYuhunStore.js';
 import useCalcStore from '@/store/calc.js';
 
-import { calcCombNum, hasIntersection, differenceSet } from './math';
+import { calcCombNum, hasIntersection, differenceSet, Permutation } from './math';
+import { yuhunInfo, twoSuitOptions } from '@/data/yuhuninfo.js';
 
 const pruneYuhunList = () => {
   const { getEqDataByPos } = useYuhunStore();
@@ -97,4 +99,72 @@ const pruneFreeYh = (list, effectiveAttrs, notFreeAttrs) => {
   return list;
 };
 
-export { pruneYuhunList };
+// 先组合后排列
+const getYuhunCombos = () => {
+  const calcStore = useCalcStore();
+  const suitList = calcStore.getSuitList;
+  let mainCandidates = [];
+  let secondCandidates = [];
+  console.log(suitList);
+  // 套装组合
+  let comboList = [];
+  if (suitList.length === 2) {
+    // 先考虑 4 + 2 的情况
+    mainCandidates = getSuitsById(suitList.filter((item) => item.count === 4)[0].id);
+    secondCandidates = getSuitsById(suitList.filter((item) => item.count === 2)[0].id);
+    for (const four of mainCandidates) {
+      for (const two of secondCandidates) {
+        comboList.push([four, four, four, four, two, two]);
+      }
+    }
+  }
+  // 套装排列
+  let result = [];
+  for (let cb of comboList) {
+    let p = new Permutation(cb);
+    result.push(...uniqWith(p.result, isEqual));
+  }
+  return result;
+};
+
+// 根据id获取御魂种类，如id=6，返回攻击加成的御魂种类列表
+// 如果是300002直接返回本身的列表
+const getSuitsById = (id) => {
+  if (id > 10) {
+    return [id];
+  } else {
+    let attrType = twoSuitOptions.filter((item) => item.id === id)[0].type;
+    return yuhunInfo.filter((yuhun) => yuhun.type === attrType).map((item) => item.id);
+  }
+};
+
+const makeCombination = () => {
+  const combList = getYuhunCombos();
+  const pruneList = pruneYuhunList();
+  let cartList = [];
+  combList.forEach((comb) => {
+    // comb. like [300002, 300002, 300002, 300002, 300004, 300004]
+    let temp = comb.map((id, index) => {
+      let posList = pruneList[index].filter((item) => item.suitInfo.id === id);
+      if (!posList.length) {
+        return false;
+      } else {
+        return posList;
+      }
+    });
+    if (!temp.filter((item) => item === false).length) {
+      cartList.push(temp);
+    }
+  });
+  let res = [];
+  let totalComb = 0;
+  cartList.forEach((cart) => {
+    // 组合个数
+    totalComb += calcCombNum(cart);
+    res.push(product(...cart));
+  });
+  console.log('total', totalComb);
+  return res;
+};
+
+export { pruneYuhunList, makeCombination };

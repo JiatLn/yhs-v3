@@ -119,13 +119,15 @@ import ChoiceYuhun from './component/ChoiceYuhun.vue';
 import LimitAttr from './component/LimitAttr.vue';
 import { targetOptions, pos2AttrOptions, pos4AttrOptions, pos6AttrOptions } from '@/data/calc.js';
 import useCalcStore from '@/store/calc.js';
-import { pruneYuhunList } from '@/lib/calc.js';
+import { pruneYuhunList, makeCombination } from '@/lib/calc.js';
 
 const calcStore = useCalcStore();
 
 const start = () => {
   const yuhunList = pruneYuhunList();
   console.log(yuhunList);
+  const comboList = makeCombination();
+  console.log(comboList);
 };
 </script>
 
