@@ -218,6 +218,46 @@ let yuhunInfo = [
   },
 ];
 
+// 首领御魂固定属性
+const singleAttrMap = [
+  {
+    id: 1,
+    rate: 0.16,
+    type: 'DefenseRate',
+    label: '防御加成',
+  },
+  {
+    id: 2,
+    rate: 0.08,
+    type: 'AttackRate',
+    label: '攻击加成',
+  },
+  {
+    id: 3,
+    rate: 0.06,
+    type: 'CritRate',
+    label: '暴击',
+  },
+  {
+    id: 4,
+    rate: 0.16,
+    type: 'HpRate',
+    label: '生命加成',
+  },
+  {
+    id: 5,
+    rate: 0.08,
+    type: 'EffectHitRate',
+    label: '效果命中',
+  },
+  {
+    id: 6,
+    rate: 0.08,
+    type: 'EffectResistRate',
+    label: '效果抵抗',
+  },
+];
+
 yuhunInfo = yuhunInfo.sort((a, b) => a.id - b.id);
 
 const yuhunDict = groupBy(yuhunInfo, (item) => item.type);
@@ -281,4 +321,4 @@ const twoSuitOptions = [
   },
 ];
 
-export { yuhunInfo, attrDict, yuhunDict, yuhunOptions, twoSuitOptions };
+export { yuhunInfo, attrDict, yuhunDict, yuhunOptions, twoSuitOptions, singleAttrMap };

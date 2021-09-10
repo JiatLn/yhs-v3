@@ -1,7 +1,7 @@
 import { flatten } from 'lodash';
 
 // 解析御魂json
-import { yuhunInfo, attrDict } from '@/data/yuhuninfo.js';
+import { yuhunInfo, attrDict, singleAttrMap } from '@/data/yuhuninfo.js';
 import { calcYuhunScore } from '@/utils/analysis.js';
 
 const parseYhJson = (json) => {
@@ -10,6 +10,15 @@ const parseYhJson = (json) => {
   eqData.forEach((eq, index) => {
     eq.suitInfo = yuhunInfo.filter((item) => item.id === eq.suit_id)[0];
     eqDataByPos[eq.pos - 1].push(eq);
+    // 首领御魂 主属性算上固定属性
+    if (eq.single_attr > 0) {
+      let singleAttr = singleAttrMap.filter((attr) => attr.id === eq.single_attr)[0];
+      if (eq.base_attr[singleAttr.type]) {
+        eq.base_attr[singleAttr.type] += singleAttr.rate;
+      } else {
+        eq.base_attr[singleAttr.type] = singleAttr.rate;
+      }
+    }
   });
   Reflect.deleteProperty(json, 'equip_data');
   eqData.forEach((item) => {
