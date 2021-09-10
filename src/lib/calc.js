@@ -167,4 +167,25 @@ const makeCombination = () => {
   return res;
 };
 
-export { pruneYuhunList, makeCombination };
+// 根据御魂组合提取有效属性加成
+const calcTarget = (comb) => {
+  console.log(comb);
+  const calcStore = useCalcStore();
+  const effectiveAttrs = calcStore.getEffectiveAttrs;
+  let effectiveAttrDict = {};
+  effectiveAttrs.forEach((attr) => {
+    effectiveAttrDict[attr] = 0;
+  });
+  comb.forEach((item, index) => {
+    effectiveAttrs.forEach((attr) => {
+      // 主属性
+      effectiveAttrDict[attr] += item.base_attr[attr] || 0;
+      // 附属性
+      effectiveAttrDict[attr] += item.rand_attr[attr] || 0;
+    });
+  });
+  console.log(effectiveAttrDict);
+  return effectiveAttrDict;
+};
+
+export { pruneYuhunList, makeCombination, calcTarget };
