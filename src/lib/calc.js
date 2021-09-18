@@ -1,3 +1,5 @@
+import { toRaw } from 'vue';
+
 import { groupBy, sortBy, sum, uniqWith, isEqual } from 'lodash';
 import { product } from 'cartesian-product-generator';
 
@@ -6,6 +8,8 @@ import useCalcStore from '@/store/calc.js';
 
 import { calcCombNum, hasIntersection, differenceSet, Permutation } from './math';
 import { yuhunInfo, twoSuitOptions } from '@/data/yuhuninfo.js';
+
+import MyWorker from '@/workers/output?worker';
 
 const pruneYuhunList = () => {
   const { getEqDataByPos } = useYuhunStore();
@@ -26,6 +30,9 @@ const pruneYuhunList = () => {
   yuhunList = pruneFreeYh(yuhunList, calcStore.getEffectiveAttrs, calcStore.getNotFreeAttrs);
   calcCombNum(yuhunList);
 
+  yuhunList = yuhunList.map((pos) => {
+    return pos.map((item) => toRaw(item));
+  });
   return yuhunList;
 };
 
@@ -105,7 +112,6 @@ const getYuhunCombos = () => {
   const suitList = calcStore.getSuitList;
   let mainCandidates = [];
   let secondCandidates = [];
-  console.log(suitList);
   // 套装组合
   let comboList = [];
   if (suitList.length === 2) {
@@ -141,6 +147,7 @@ const getSuitsById = (id) => {
 const makeCombination = () => {
   const combList = getYuhunCombos();
   const pruneList = pruneYuhunList();
+
   let cartList = [];
   combList.forEach((comb) => {
     // comb. like [300002, 300002, 300002, 300002, 300004, 300004]
@@ -158,9 +165,17 @@ const makeCombination = () => {
   });
   let res = [];
   let totalComb = 0;
+  const calcStore = useCalcStore();
+  const effectiveAttrs = calcStore.getEffectiveAttrs;
+  const getHeroPanel = calcStore.getHeroPanel;
   cartList.forEach((cart) => {
     // 组合个数
     totalComb += calcCombNum(cart);
+    let worker = new MyWorker();
+    worker.postMessage({ cart, effectiveAttrs, heroPanel: getHeroPanel });
+    worker.onmessage = (e) => {
+      console.log(e.data);
+    };
     res.push(product(...cart));
   });
   console.log('total', totalComb);
@@ -168,10 +183,7 @@ const makeCombination = () => {
 };
 
 // 根据御魂组合提取有效属性加成
-const calcTarget = (comb) => {
-  console.log(comb);
-  const calcStore = useCalcStore();
-  const effectiveAttrs = calcStore.getEffectiveAttrs;
+const calcTarget = (comb, effectiveAttrs) => {
   let effectiveAttrDict = {};
   effectiveAttrs.forEach((attr) => {
     effectiveAttrDict[attr] = 0;
@@ -184,7 +196,7 @@ const calcTarget = (comb) => {
       effectiveAttrDict[attr] += item.rand_attr[attr] || 0;
     });
   });
-  console.log(effectiveAttrDict);
+  // console.log(effectiveAttrDict);
   return effectiveAttrDict;
 };
 
