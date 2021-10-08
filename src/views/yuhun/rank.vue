@@ -23,7 +23,11 @@
             width="80"
             align="center"
           ></el-table-column>
-          <el-table-column prop="pos" label="位置" width="50" align="center"></el-table-column>
+          <el-table-column prop="pos" label="位置" width="50" align="center">
+            <template #default="{ row }">
+              <span>{{ row.pos + 1 }}</span>
+            </template>
+          </el-table-column>
           <el-table-column
             prop="baseAttr"
             label="主属性"

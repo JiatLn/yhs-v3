@@ -13,7 +13,7 @@ export function getSuitPosCountByScore(suitName, calcType, rankNum) {
       .filter((eq) => eq.suitInfo.name === suitName)
       .map((item) => ({ ...item, point: calcPoint(item, calcType, onlySpeed) }))
       .filter((eq) => eq.point >= rankNum),
-    (item) => item.pos,
+    (item) => item.pos + 1,
   );
   res = merge({ 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }, res);
   return Object.values(res);
@@ -23,7 +23,8 @@ export function getSuitPosCountByScore(suitName, calcType, rankNum) {
 // https://bbs.nga.cn/read.php?&tid=15467806&pid=303809446&to=1
 export function calcYuhunScore(eqData) {
   const getValue = (name) => {
-    return eqData.rand_attr[name] || 0;
+    // return eqData.rand_attr[name] || 0;
+    return eqData.random_attrs.filter((item) => item.type === name)[0]?.value || 0;
   };
   let score = [0, 0, 0, 0, 0, 0];
   // A输出项 = (速度/2.7+暴击/2.7+攻击加成/2.7+暴击伤害/3.6)*100/9

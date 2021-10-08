@@ -5,28 +5,35 @@ import { yuhunInfo, attrDict, singleAttrMap } from '@/data/yuhuninfo.js';
 import { calcYuhunScore } from '@/utils/analysis.js';
 
 const parseYhJson = (json) => {
-  const eqData = json.equip_data;
-  let eqDataByPos = [[], [], [], [], [], []];
+  const eqData = json.data.hero_equips;
+  // let eqDataByPos = [[], [], [], [], [], []];
   eqData.forEach((eq, index) => {
     eq.suitInfo = yuhunInfo.filter((item) => item.id === eq.suit_id)[0];
-    eqDataByPos[eq.pos - 1].push(eq);
-    // 首领御魂 主属性算上固定属性
-    if (eq.single_attr > 0) {
-      let singleAttr = singleAttrMap.filter((attr) => attr.id === eq.single_attr)[0];
-      if (eq.base_attr[singleAttr.type]) {
-        eq.base_attr[singleAttr.type] += singleAttr.rate;
-      } else {
-        eq.base_attr[singleAttr.type] = singleAttr.rate;
-      }
-    }
+    // eqDataByPos[eq.pos].push(eq);
+    // // 首领御魂 主属性算上固定属性
+    // if (eq.single_attrs.length) {
+    //   let singleAttr = singleAttrMap.filter((attr) => attr.id === eq.single_attr)[0];
+    //   if (eq.base_attr[singleAttr.type]) {
+    //     eq.base_attr[singleAttr.type] += singleAttr.rate;
+    //   } else {
+    //     eq.base_attr[singleAttr.type] = singleAttr.rate;
+    //   }
+    // }
   });
-  Reflect.deleteProperty(json, 'equip_data');
+  const res = { ...json.data, eqData };
+  Reflect.deleteProperty(res, 'realm_cards');
+  Reflect.deleteProperty(res, 'heroes');
+  Reflect.deleteProperty(res, 'realm_cards');
+  Reflect.deleteProperty(res, 'hero_book_shards');
+  Reflect.deleteProperty(res, 'hero_equip_presets');
+  Reflect.deleteProperty(res, 'story_tasks');
+  Reflect.deleteProperty(res, 'hero_equips');
   eqData.forEach((item) => {
     item.score = calcYuhunScore(item);
-    item.baseAttr = attrDict[Object.keys(item.base_attr)[0]];
     Reflect.deleteProperty(item, 'suit_id');
   });
-  return { ...json, eqData, eqDataByPos };
+  console.log(res);
+  return res;
 };
 
 // A输出项 、F奶盾项、M命中、D抵抗、B双堆、S纯速度项
@@ -62,7 +69,8 @@ const calcPoint = (eqData, type = ['A', 'S'], onlySpeed = false) => {
 
   // 有效属性列表
   const goodAttr = [...new Set(flatten(type.map((item) => attrsDict[item])))];
-  const randAttr = Object.entries(eqData.rand_attr);
+  // const randAttr = Object.entries(eqData.rand_attr);
+  const randAttr = eqData.random_attrs.map((item) => [item.type, item.value]);
   randAttr.forEach(([name, value]) => {
     if (goodAttr.includes(name)) {
       point += calcAttr(name, value);

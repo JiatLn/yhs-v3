@@ -10,26 +10,28 @@
           <span>{{ props.yuhun.quality }}星</span>
         </div>
       </div>
-      <div class="box-top__right">{{ props.yuhun.pos }}号位</div>
+      <div class="box-top__right">{{ props.yuhun.pos + 1 }}号位</div>
     </div>
 
     <ul class="attrs">
       <li class="attr-item">
-        <span>{{ attrDict[Object.keys(props.yuhun.base_attr)[0]] }}</span>
-        <span>+{{ formatValue(Object.values(props.yuhun.base_attr)[0], 0) }}</span>
+        <span>{{ attrDict[props.yuhun.base_attr.type] }}</span>
+        <span>+{{ formatValue(props.yuhun.base_attr.value, 0) }}</span>
       </li>
       <li
         class="attr-item"
-        v-for="(keyValue, index) in Object.entries(props.yuhun.rand_attr)"
+        v-for="(attr, index) in props.yuhun.random_attrs"
         :key="props.yuhun.id + '-' + index"
       >
-        <span>{{ attrDict[keyValue[0]] }}</span>
-        <span>+{{ formatValue(keyValue[1], zoom ? 4 : 0) }}</span>
+        <span>{{ attrDict[attr.type] }}</span>
+        <span>+{{ formatValue(attr.value, zoom ? 4 : 0) }}</span>
       </li>
     </ul>
     <div class="feature">
-      <span v-if="props.yuhun.single_attr === 0">2件套属性：{{ props.yuhun.suitInfo.type }}</span>
-      <span v-else>固有属性：{{ props.yuhun.single_attr }}</span>
+      <span v-if="props.yuhun.single_attrs.length === 0">
+        2件套属性：{{ props.yuhun.suitInfo.type }}
+      </span>
+      <span v-else>固有属性：{{ props.yuhun.single_attrs.type }}</span>
       <br />
       <div class="zoom">
         <span>放大镜</span>

@@ -18,15 +18,20 @@
               v-for="item in fullSpeed[i]"
               :key="item.id"
               class="list-item"
-              :class="{ zcm: item.suitInfo.name === '招财猫' }"
+              :class="{ zcm: item.suitInfo?.name === '招财猫' }"
             >
               <div class="name">
-                {{ item.suitInfo.name }}
+                {{ item.suitInfo?.name }}
                 <span class="attr" v-if="[4, 6].includes(i)">
-                  「{{ attrDict[Object.keys(item.base_attr)[0]].replace('加成', '') }}」
+                  「{{ attrDict[item.base_attr.type].replace('加成', '') }}」
                 </span>
               </div>
-              <span class="number">{{ format45(item.rand_attr.Speed, 2) }}</span>
+              <span class="number">{{
+                format45(
+                  item.random_attrs.filter((attr) => attr.type === 'Speed')[0]?.value || 0,
+                  4,
+                )
+              }}</span>
             </li>
           </ul>
         </el-tab-pane>
@@ -47,21 +52,26 @@ const { getEqData } = useYuhunStore();
 const fullSpeed = groupBy(
   sortBy(
     getEqData.value.filter((item) => {
-      if (item.pos === 2) {
+      let speedVal = item.random_attrs.filter((attr) => attr.type === 'Speed')[0]?.value || 0;
+      if (item.pos === 1) {
         // 二号位显示脖子
-        return item.rand_attr.Speed >= 12 && item.base_attr.Speed === 57;
+        return speedVal >= 15 && item.base_attr.type === 'Speed' && item.base_attr.value === 57;
       } else {
-        return item.rand_attr.Speed >= 15;
+        return speedVal >= 15;
       }
     }),
-    (item) => -item.rand_attr.Speed,
+    (item) => {
+      let speedVal = item.random_attrs.filter((attr) => attr.type === 'Speed')[0]?.value || 0;
+      return -speedVal;
+    },
   ),
-  (item) => item.pos,
+  (item) => item.pos + 1,
 );
 
-const maxSpeed = Object.entries(fullSpeed).map(([pos, yhList]) =>
-  format45(yhList[0].rand_attr.Speed, 4),
-);
+const maxSpeed = Object.entries(fullSpeed).map(([pos, yhList]) => {
+  let speedVal = yhList[0].random_attrs.filter((attr) => attr.type === 'Speed')[0]?.value || 0;
+  return format45(speedVal, 4);
+});
 </script>
 
 <style lang="scss" scoped>

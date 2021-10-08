@@ -17,7 +17,11 @@ const useAppStore = defineStore({
       return !!Object.keys(this.yyx).length;
     },
     getUserInfo() {
-      return this.yyx.user_info;
+      return {
+        ...this.yyx.player,
+        timestamp: this.yyx.timestamp,
+        currency: this.yyx.currency,
+      };
     },
     getEqData() {
       return this.yyx.eqData;
